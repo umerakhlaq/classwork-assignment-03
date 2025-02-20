@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read More / Read Less</title>
+    <style>
+        /* .btn {
+      display: inline-block;
+      margin: 10px 0;
+      padding: 5px 10px;
+      font-size: 14px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    } */
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e3f2fd;
+            padding: 30px;
+            margin: 0;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+            background-color: #ffffff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        textarea:focus {
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        #content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-wrap: break-word;
+            transition: all 0.3s ease;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 15px 10px 0 0;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #0072ff, #0044cc);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <textarea id="inputText" placeholder="Type your text here..." rows="5" style="width: 100%;"></textarea>
+    <div id="content"></div>
+
+    <script>
+        const inputText = document.getElementById("inputText");
+        const contentContainer = document.getElementById("content");
+        const maxLength = 200;
+
+        inputText.addEventListener("input", () => {
+            const fullText = inputText.value;
+            contentContainer.innerHTML = "";
+
+            if (fullText.length <= maxLength) {
+                contentContainer.textContent = fullText;
+            } else {
+                // Show truncated text
+                const truncatedText = document.createElement("span");
+                truncatedText.textContent = fullText.substring(0, maxLength) + "...";
+                contentContainer.appendChild(truncatedText);
+
+                // Create "View More" button
+                const viewMoreButton = document.createElement("button");
+                viewMoreButton.textContent = "View More";
+                viewMoreButton.classList.add("btn");
+
+                // Create "View Less" button (initially hidden)
+                const viewLessButton = document.createElement("button");
+                viewLessButton.textContent = "View Less";
+                viewLessButton.classList.add("btn");
+                viewLessButton.style.display = "none";
+
+                // Expand text on "View More"
+                viewMoreButton.addEventListener("click", () => {
+                    truncatedText.textContent = fullText;
+                    viewMoreButton.style.display = "none";
+                    viewLessButton.style.display = "inline-block";
+                });
+
+                // Collapse text on "View Less"
+                viewLessButton.addEventListener("click", () => {
+                    truncatedText.textContent = fullText.substring(0, maxLength) + "...";
+                    viewLessButton.style.display = "none";
+                    viewMoreButton.style.display = "inline-block";
+                });
+
+                contentContainer.appendChild(viewMoreButton);
+                contentContainer.appendChild(viewLessButton);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
